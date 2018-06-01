@@ -16,13 +16,13 @@ namespace UnitTestLab1
 
         public void Deposit(double amount)
         {
-            if (amount <= 0)
+            if (double.IsPositiveInfinity(amount)||double.IsNegativeInfinity(amount))
             {
-                throw new Exception("You can't deposit amount under one.");
+                throw new Exception("Exceeded infinity limit.");
             }
-            else if (amount >= 50000)
+            else if (double.IsNaN(amount))
             {
-                throw new Exception("You can't deposit more than 50 000 SEK at one time. Please go to nearest bank for more information.");
+                throw new Exception("Amount must be a number");           
             }
             else
             {
@@ -35,13 +35,13 @@ namespace UnitTestLab1
             {
                 throw new Exception("Could not withdraw when balance under 0.");
             }
-            else if (amount >= 5000)
+            else if (double.IsPositiveInfinity(amount) || double.IsNegativeInfinity(amount))
             {
-                throw new Exception("COuld not withdraw more than 5000.");
+                throw new Exception("Exceeded infinity limit.");
             }
-            else if (amount <= 0)
+            else if (double.IsNaN(amount))
             {
-                throw new Exception("COuln't not withdraw negative amount.");
+                throw new Exception("Amount must be anumber.");
             }
 
             this.Balance = this.Balance - amount;
@@ -55,6 +55,10 @@ namespace UnitTestLab1
             else if (double.IsPositiveInfinity(amount) || double.IsNegativeInfinity(amount))
             {
                 throw new Exception("The amount exceeded the infinity limit");
+            }
+            else if (this == target)
+            {
+                throw new Exception("Can't transfer money to the same account.");
             }
             else
             {

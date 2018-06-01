@@ -9,7 +9,7 @@ namespace TestForLab1
     {
 
         [Fact]
-        public void ShouldIncrementBalance()
+        public void ShouldIncrementBalanceOnDeposit()
         {
             Account Account = new Account(100/*, 0.13*/);
 
@@ -21,31 +21,40 @@ namespace TestForLab1
         }
 
         [Fact]
-        public void ShouldThrowExceptionIfOverlimit()
+        public void ShouldThrowExceptionIfPositiveInfinityOnDeposit()
         {
             Account Account = new Account(100/*, 0.13*/);
 
-            double amount = 500001;
 
             Assert.Throws<Exception>(() => {
 
-                Account.Deposit(amount);
+                Account.Deposit(double.PositiveInfinity);
             });
         }
-
-
         [Fact]
-        public void ShouldThrowExceptionIfUnderlimit()
+        public void ShouldThrowExceptionIfNegativeInfinityOnDeposit()
         {
             Account Account = new Account(100/*, 0.13*/);
 
-            double amount = -1;
 
             Assert.Throws<Exception>(() => {
 
-                Account.Deposit(amount);
+                Account.Deposit(double.NegativeInfinity);
             });
         }
+        [Fact]
+        public void ShouldThrowAnExceptionOnNaNWhenDeposit()
+        {
+            Account Account = new Account(1000/*, 0.13*/);
+           
+
+            Assert.Throws<Exception>(() => {
+
+                Account.Deposit(double.NaN);
+            });
+        }
+
+
         [Fact]
         public void ShouldWithdrawAmountIfValid()
         {
@@ -59,7 +68,18 @@ namespace TestForLab1
 
         }
         [Fact]
-        public void ShouldThrowExceptionIfBroke()
+        public void ShouldThrowAnExceptionIfNaNOnWithdraw()
+        {
+            Account Account = new Account(1000/*, 0.13*/);
+
+
+            Assert.Throws<Exception>(() => {
+
+                Account.Withdraw(double.NaN);
+            });
+        }
+        [Fact]
+        public void ShouldThrowExceptionIfBrokeOnWithdraw()
         {
             Account Account = new Account(0/*, 0.13*/);
 
@@ -72,26 +92,25 @@ namespace TestForLab1
 
         }
         [Fact]
-        public void ShouldThrowExceptionIfWithdrawIsOverLimit()
-        {
-            Account Account = new Account(50000/*, 0.13*/);
-            double amount = 10000;
-
-            Assert.Throws<Exception>(() => {
-
-                Account.Withdraw(amount);
-            });
-        }
-        [Fact]
-        public void ShouldThrowExceptionIfAmountMinus()
+        public void WithdrawShouldThrowExceptionIfPositiveInfinity()
         {
             Account Account = new Account(100/*, 0.13*/);
 
-            double amount = -1;
 
             Assert.Throws<Exception>(() => {
 
-                Account.Withdraw(amount);
+                Account.Withdraw(double.PositiveInfinity);
+            });
+        }
+        [Fact]
+        public void WithdrawShouldThrowExceptionIfNegativeInfinity()
+        {
+            Account Account = new Account(100/*, 0.13*/);
+
+
+            Assert.Throws<Exception>(() => {
+
+                Account.Withdraw(double.NegativeInfinity);
             });
         }
         [Fact]
@@ -108,7 +127,7 @@ namespace TestForLab1
 
         }
         [Fact]
-        public void ShouldWithdrawFromAccount()
+        public void ShouldWithdrawFromAccountOnTransfer()
         {
             Account Account = new Account(1000/*, 0.13*/);
             Account SavingAccount = new Account(250/*, 0.13*/);
@@ -154,6 +173,17 @@ namespace TestForLab1
                 Account.Transfer(SavingAccount, double.NegativeInfinity);
             });
 
+        }
+        [Fact]
+        public void ShouldThrowAnExceptionIfTransferToSameAccount()
+        {
+            Account Account = new Account(1000);
+            double amount = 500;
+
+            Assert.Throws<Exception>(() => {
+
+                Account.Transfer(Account, amount);
+            });
         }
     }
 }
