@@ -119,5 +119,41 @@ namespace TestForLab1
             double expectedBalance = 500;
             Assert.Equal(expectedBalance, actualBalance);
         }
+        [Fact]
+        public void ShouldThrowAnExceptionOnNaNWhenTransfer()
+        {
+            Account Account = new Account(1000/*, 0.13*/);
+            Account SavingAccount = new Account(250/*, 0.13*/);
+            
+
+            Assert.Throws<Exception>(() => {
+
+                Account.Transfer(SavingAccount,double.NaN);
+            });
+        }
+        [Fact]
+        public void ShouldThrowAnExceptionOnPositiveInfinityWhenTransfer()
+        {
+            Account Account = new Account(1000/*, 0.13*/);
+            Account SavingAccount = new Account(250/*, 0.13*/);
+
+            Assert.Throws<Exception>(() => {
+
+                Account.Transfer(SavingAccount, double.PositiveInfinity);
+            });
+
+        }
+        [Fact]
+        public void ShouldThrowAnExceptionOnNegativeInfinityWhenTransfer()
+        {
+            Account Account = new Account(1000/*, 0.13*/);
+            Account SavingAccount = new Account(250/*, 0.13*/);
+
+            Assert.Throws<Exception>(() => {
+
+                Account.Transfer(SavingAccount, double.NegativeInfinity);
+            });
+
+        }
     }
 }

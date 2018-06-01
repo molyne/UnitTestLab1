@@ -48,10 +48,20 @@ namespace UnitTestLab1
         }
         public bool Transfer(Account target, double amount)
         {
+            if (double.IsNaN(amount))
+            {
+                throw new Exception("The amount is not a number");
+            }
+            else if (double.IsPositiveInfinity(amount) || double.IsNegativeInfinity(amount))
+            {
+                throw new Exception("The amount exceeded the infinity limit");
+            }
+            else
+            {
+                target.Balance = target.Balance + amount;
 
-            target.Balance = target.Balance + amount;
-
-            this.Balance = this.Balance - amount;
+                this.Balance = this.Balance - amount;
+            }
 
 
             return true;
