@@ -16,18 +16,46 @@ namespace UnitTestLab1
 
         public void Deposit(double amount)
         {
-
-            this.Balance = this.Balance + amount;
-
+            if (amount <= 0)
+            {
+                throw new Exception("You can't deposit amount under one.");
+            }
+            else if (amount >= 50000)
+            {
+                throw new Exception("You can't deposit more than 50 000 SEK at one time. Please go to nearest bank for more information.");
+            }
+            else
+            {
+                this.Balance = this.Balance + amount;
+            }
         }
         public void Withdraw(double amount)
         {
+            if (this.Balance <= 0)
+            {
+                throw new Exception("Could not withdraw when balance under 0.");
+            }
+            else if (amount >= 5000)
+            {
+                throw new Exception("COuld not withdraw more than 5000.");
+            }
+            else if (amount <= 0)
+            {
+                throw new Exception("COuln't not withdraw negative amount.");
+            }
 
+            this.Balance = this.Balance - amount;
         }
-        //public bool Transfer(Account target, double amount)
-        //{
-        //    return;
-        //}
+        public bool Transfer(Account target, double amount)
+        {
+
+            target.Balance = target.Balance + amount;
+
+            this.Balance = this.Balance - amount;
+
+
+            return true;
+        }
         //public double CalculateInterest()
         //{
         //    return;
