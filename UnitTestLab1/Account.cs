@@ -104,6 +104,8 @@ namespace UnitTestLab1
 
             double rate = this.Balance * this.InterestRate;
             double balanceWithRate = this.Balance + rate;
+            this.Balance = balanceWithRate;
+
             return rate;
         }
 
