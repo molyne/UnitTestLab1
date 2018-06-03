@@ -95,7 +95,11 @@ namespace UnitTestLab1
             }
             else if (double.IsNaN(this.InterestRate))
             {
-                throw new Exception("Interest Rate must be a number");
+                throw new Exception("Interest rate must be a number");
+            }
+            else if (double.IsNegativeInfinity(this.Balance))
+            {
+                throw new Exception("Balance exceeded infinity limitation. ");
             }
 
             double rate = this.Balance * this.InterestRate;

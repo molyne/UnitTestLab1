@@ -241,5 +241,19 @@ namespace TestForLab1
                 Account.CalculateInterest();
             });
         }
+        [Fact]
+        public void CalculateSholdThrowExceptionIfInfinity()
+        {
+
+            //TODO testa att skicka in flera värden med theory, alltså testa positieinfinity i samma testfall.
+
+            Account Account = new Account(double.NegativeInfinity, 0.02);
+
+            Assert.Throws<Exception>(() => {
+
+                Account.CalculateInterest();
+            });
+        }
+
     }
 }
