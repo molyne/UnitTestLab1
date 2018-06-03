@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace UnitTestLab1
@@ -7,11 +8,14 @@ namespace UnitTestLab1
     public class Account
     {
         public double Balance { get; private set; }
-        // TODO  public double InterestRate { get; set; }
+        public double InterestRate { get; set; }
 
-        public Account(double initialBalance/*, double interestRate*/)
+        public Account(double initialBalance, double interestRate)
         {
             this.Balance = initialBalance;
+            this.InterestRate = interestRate;
+
+            //CalculateInterest();
         }
 
         public void Deposit(double amount)
@@ -63,6 +67,9 @@ namespace UnitTestLab1
             else if (double.IsPositiveInfinity(amount) || double.IsNegativeInfinity(amount))
             {
                 throw new Exception("The amount exceeded the infinity limit");
+            }else if (this.Balance < amount)
+            {
+                throw new Exception("Not enough money in your account to transfer.");
             }
 
             else
@@ -78,10 +85,17 @@ namespace UnitTestLab1
 
 
         }
-        //public double CalculateInterest()
-        //{
-        //    return;
-        //}
+
+
+        public double CalculateInterest()
+        {
+            double testbalance = this.Balance;
+            double testInterest = this.InterestRate;
+
+            double rate = this.Balance * this.InterestRate;
+            double balanceWithRate = this.Balance + rate;
+            return rate;
+        }
 
     }
 }

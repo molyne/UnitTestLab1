@@ -11,7 +11,7 @@ namespace TestForLab1
         [Fact]
         public void ShouldIncrementBalanceOnDeposit()
         {
-            Account Account = new Account(100/*, 0.13*/);
+            Account Account = new Account(100, 0.02);
 
             double amount = 100;
             Account.Deposit(amount);
@@ -23,7 +23,7 @@ namespace TestForLab1
         [Fact]
         public void ShouldThrowExceptionIfPositiveInfinityOnDeposit()
         {
-            Account Account = new Account(100/*, 0.13*/);
+            Account Account = new Account(100, 0.02);
 
 
             Assert.Throws<Exception>(() => {
@@ -34,7 +34,7 @@ namespace TestForLab1
         [Fact]
         public void ShouldThrowExceptionIfNegativeInfinityOnDeposit()
         {
-            Account Account = new Account(100/*, 0.13*/);
+            Account Account = new Account(100, 0.02);
 
 
             Assert.Throws<Exception>(() => {
@@ -45,7 +45,7 @@ namespace TestForLab1
         [Fact]
         public void ShouldThrowAnExceptionOnNaNWhenDeposit()
         {
-            Account Account = new Account(1000/*, 0.13*/);
+            Account Account = new Account(1000, 0.02);
            
 
             Assert.Throws<Exception>(() => {
@@ -58,7 +58,7 @@ namespace TestForLab1
         [Fact]
         public void ShouldWithdrawAmountIfValid()
         {
-            Account Account = new Account(100/*, 0.13*/);
+            Account Account = new Account(100, 0.02);
 
             double amount = 50;
             Account.Withdraw(amount);
@@ -70,7 +70,7 @@ namespace TestForLab1
         [Fact]
         public void ShouldThrowAnExceptionIfNaNOnWithdraw()
         {
-            Account Account = new Account(1000/*, 0.13*/);
+            Account Account = new Account(1000, 0.02);
 
 
             Assert.Throws<Exception>(() => {
@@ -81,7 +81,7 @@ namespace TestForLab1
         [Fact]
         public void ShouldThrowExceptionIfBrokeOnWithdraw()
         {
-            Account Account = new Account(0/*, 0.13*/);
+            Account Account = new Account(0, 0.02);
 
             double amount = 100;
 
@@ -94,7 +94,7 @@ namespace TestForLab1
         [Fact]
         public void WithdrawShouldThrowExceptionIfPositiveInfinity()
         {
-            Account Account = new Account(100/*, 0.13*/);
+            Account Account = new Account(100, 0.02);
 
 
             Assert.Throws<Exception>(() => {
@@ -105,7 +105,7 @@ namespace TestForLab1
         [Fact]
         public void WithdrawShouldThrowExceptionIfNegativeInfinity()
         {
-            Account Account = new Account(100/*, 0.13*/);
+            Account Account = new Account(100, 0.02);
 
 
             Assert.Throws<Exception>(() => {
@@ -116,8 +116,8 @@ namespace TestForLab1
         [Fact]
         public void ShouldTransferToSavingsIfSuccessfull()
         {
-            Account Account = new Account(1000/*, 0.13*/);
-            Account SavingAccount = new Account(250/*, 0.13*/);
+            Account Account = new Account(1000, 0.02);
+            Account SavingAccount = new Account(250, 0.02);
 
             double amount = 500;
             Account.Transfer(SavingAccount,amount);
@@ -129,8 +129,8 @@ namespace TestForLab1
         [Fact]
         public void ShouldWithdrawFromAccountOnTransfer()
         {
-            Account Account = new Account(1000/*, 0.13*/);
-            Account SavingAccount = new Account(250/*, 0.13*/);
+            Account Account = new Account(1000, 0.02);
+            Account SavingAccount = new Account(250, 0.02);
             double amount = 500;
 
             Account.Transfer(SavingAccount, amount);
@@ -141,8 +141,8 @@ namespace TestForLab1
         [Fact]
         public void ShouldThrowAnExceptionOnNaNWhenTransfer()
         {
-            Account Account = new Account(1000/*, 0.13*/);
-            Account SavingAccount = new Account(250/*, 0.13*/);
+            Account Account = new Account(1000, 0.02);
+            Account SavingAccount = new Account(250, 0.02);
             
 
             Assert.Throws<Exception>(() => {
@@ -153,8 +153,8 @@ namespace TestForLab1
         [Fact]
         public void ShouldThrowAnExceptionOnPositiveInfinityWhenTransfer()
         {
-            Account Account = new Account(1000/*, 0.13*/);
-            Account SavingAccount = new Account(250/*, 0.13*/);
+            Account Account = new Account(1000, 0.02);
+            Account SavingAccount = new Account(250, 0.02);
 
             Assert.Throws<Exception>(() => {
 
@@ -165,8 +165,8 @@ namespace TestForLab1
         [Fact]
         public void ShouldThrowAnExceptionOnNegativeInfinityWhenTransfer()
         {
-            Account Account = new Account(1000/*, 0.13*/);
-            Account SavingAccount = new Account(250/*, 0.13*/);
+            Account Account = new Account(1000, 0.02);
+            Account SavingAccount = new Account(250, 0.02);
 
             Assert.Throws<Exception>(() => {
 
@@ -177,13 +177,44 @@ namespace TestForLab1
         [Fact]
         public void ShouldThrowAnExceptionIfTransferToSameAccount()
         {
-            Account Account = new Account(1000);
+            Account Account = new Account(1000, 0.02);
             double amount = 500;
 
             Assert.Throws<Exception>(() => {
 
                 Account.Transfer(Account, amount);
             });
+        }
+        [Fact]
+        public void TransferShouldThrowAnExceptionIfNotEnoughFunds()
+        {
+            Account Account = new Account(250, 0.02);
+            Account SavingAccount = new Account(250, 0.02);
+
+            double amount = 500;
+
+            Assert.Throws<Exception>(() => {
+
+                Account.Transfer(SavingAccount, amount);
+            });
+        }
+        [Fact]
+        public void TransferFromSavingToAccount()
+        {
+            Account Account = new Account(250, 0.02);
+            Account SavingAccount = new Account(250,0.02);
+
+            double amount = 200;
+
+            SavingAccount.Transfer(Account, amount);
+        }
+        [Fact]
+        public void ShouldCalculateInterestRate()
+        {
+        
+            Account Account = new Account(250,0.02);
+
+            Account.CalculateInterest();
         }
     }
 }
