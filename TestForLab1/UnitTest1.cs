@@ -214,7 +214,32 @@ namespace TestForLab1
         
             Account Account = new Account(250,0.02);
 
-            Account.CalculateInterest();
+            double rate = Account.CalculateInterest();
+
+            double actualBalance = Account.Balance+rate;
+            double expectedBalance = 255;
+            Assert.Equal(expectedBalance, actualBalance);
+        }
+        [Fact]
+        public void CalculateInterestShouldThrowAnExceptionIfBalanceIsNaN()
+        {
+            Account Account = new Account(double.NaN, 0.02);
+
+            Assert.Throws<Exception>(() => {
+
+                Account.CalculateInterest();
+            });
+        }
+        [Fact]
+        public void CalculateInterestShouldThrowAnExceptionIfInterestRateIsNan()
+        {
+
+            Account Account = new Account(200, double.NaN);
+
+            Assert.Throws<Exception>(() => {
+
+                Account.CalculateInterest();
+            });
         }
     }
 }

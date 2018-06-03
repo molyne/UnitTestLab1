@@ -89,8 +89,14 @@ namespace UnitTestLab1
 
         public double CalculateInterest()
         {
-            double testbalance = this.Balance;
-            double testInterest = this.InterestRate;
+            if (double.IsNaN(this.Balance))
+            {
+                throw new Exception("Balance must be a number");
+            }
+            else if (double.IsNaN(this.InterestRate))
+            {
+                throw new Exception("Interest Rate must be a number");
+            }
 
             double rate = this.Balance * this.InterestRate;
             double balanceWithRate = this.Balance + rate;
