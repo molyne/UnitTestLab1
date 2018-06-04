@@ -29,7 +29,8 @@ namespace TestForLab1
             Account Account = new Account(100, 0.02);
 
 
-            Assert.Throws<Exception>(() => {
+            Assert.Throws<Exception>(() =>
+            {
 
                 Account.Deposit(amount);
             });
@@ -47,7 +48,7 @@ namespace TestForLab1
             Assert.Equal(expectedBalance, actualBalance);
 
         }
-     
+
         [Fact]
         public void ShouldThrowExceptionIfBrokeOnWithdraw()
         {
@@ -55,13 +56,14 @@ namespace TestForLab1
 
             double amount = 100;
 
-            Assert.Throws<Exception>(() => {
+            Assert.Throws<Exception>(() =>
+            {
 
                 Account.Withdraw(amount);
             });
 
         }
-     
+
         [Theory]
         [InlineData(double.NegativeInfinity)]
         [InlineData(double.PositiveInfinity)]
@@ -71,7 +73,8 @@ namespace TestForLab1
             Account Account = new Account(100, 0.02);
 
 
-            Assert.Throws<Exception>(() => {
+            Assert.Throws<Exception>(() =>
+            {
 
                 Account.Withdraw(amount);
             });
@@ -83,7 +86,7 @@ namespace TestForLab1
             Account SavingAccount = new Account(250, 0.02);
 
             double amount = 500;
-            Account.Transfer(SavingAccount,amount);
+            Account.Transfer(SavingAccount, amount);
             double actualBalance = SavingAccount.Balance;
             double expectedBalance = 750;
             Assert.Equal(expectedBalance, actualBalance);
@@ -101,7 +104,7 @@ namespace TestForLab1
             double expectedBalance = 500;
             Assert.Equal(expectedBalance, actualBalance);
         }
-         
+
         [Theory]
         [InlineData(double.NegativeInfinity)]
         [InlineData(double.PositiveInfinity)]
@@ -111,7 +114,8 @@ namespace TestForLab1
             Account Account = new Account(1000, 0.02);
             Account SavingAccount = new Account(250, 0.02);
 
-            Assert.Throws<Exception>(() => {
+            Assert.Throws<Exception>(() =>
+            {
 
                 Account.Transfer(SavingAccount, amount);
             });
@@ -123,7 +127,8 @@ namespace TestForLab1
             Account Account = new Account(1000, 0.02);
             double amount = 500;
 
-            Assert.Throws<Exception>(() => {
+            Assert.Throws<Exception>(() =>
+            {
 
                 Account.Transfer(Account, amount);
             });
@@ -136,7 +141,8 @@ namespace TestForLab1
 
             double amount = 500;
 
-            Assert.Throws<Exception>(() => {
+            Assert.Throws<Exception>(() =>
+            {
 
                 Account.Transfer(SavingAccount, amount);
             });
@@ -145,7 +151,7 @@ namespace TestForLab1
         public void TransferFromSavingToAccount()
         {
             Account Account = new Account(250, 0.02);
-            Account SavingAccount = new Account(250,0.02);
+            Account SavingAccount = new Account(250, 0.02);
 
             double amount = 200;
 
@@ -154,8 +160,8 @@ namespace TestForLab1
         [Fact]
         public void ShouldCalculateInterestRate()
         {
-        
-            Account Account = new Account(250,0.02);
+
+            Account Account = new Account(250, 0.02);
 
             double actualRate = Account.CalculateInterest();
             double expectedRate = 5;
@@ -182,7 +188,8 @@ namespace TestForLab1
         {
             Account Account = new Account(balance, 0.02);
 
-            Assert.Throws<Exception>(() => {
+            Assert.Throws<Exception>(() =>
+            {
 
                 Account.CalculateInterest();
             });
