@@ -97,7 +97,11 @@ namespace UnitTestLab1
             {
                 throw new Exception("Interest rate must be a number");
             }
-            else if (double.IsNegativeInfinity(this.Balance))
+            else if (double.IsNegativeInfinity(this.InterestRate) || double.IsPositiveInfinity(this.InterestRate))
+            {
+                throw new Exception("Interest rate exceeded infinity limitation");
+            }
+            else if (double.IsNegativeInfinity(this.Balance) || double.IsPositiveInfinity(this.Balance))
             {
                 throw new Exception("Balance exceeded infinity limitation. ");
             }

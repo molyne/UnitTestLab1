@@ -20,40 +20,20 @@ namespace TestForLab1
             Assert.Equal(expectedBalance, actualBalance);
         }
 
-        [Fact]
-        public void ShouldThrowExceptionIfPositiveInfinityOnDeposit()
+        [Theory]
+        [InlineData(double.NegativeInfinity)]
+        [InlineData(double.PositiveInfinity)]
+        [InlineData(double.NaN)]
+        public void ShouldThrowExceptionIfAmountNotValidOnDeposit(double amount)
         {
             Account Account = new Account(100, 0.02);
 
 
             Assert.Throws<Exception>(() => {
 
-                Account.Deposit(double.PositiveInfinity);
+                Account.Deposit(amount);
             });
         }
-        [Fact]
-        public void ShouldThrowExceptionIfNegativeInfinityOnDeposit()
-        {
-            Account Account = new Account(100, 0.02);
-
-
-            Assert.Throws<Exception>(() => {
-
-                Account.Deposit(double.NegativeInfinity);
-            });
-        }
-        [Fact]
-        public void ShouldThrowAnExceptionOnNaNWhenDeposit()
-        {
-            Account Account = new Account(1000, 0.02);
-           
-
-            Assert.Throws<Exception>(() => {
-
-                Account.Deposit(double.NaN);
-            });
-        }
-
 
         [Fact]
         public void ShouldWithdrawAmountIfValid()
@@ -67,17 +47,7 @@ namespace TestForLab1
             Assert.Equal(expectedBalance, actualBalance);
 
         }
-        [Fact]
-        public void ShouldThrowAnExceptionIfNaNOnWithdraw()
-        {
-            Account Account = new Account(1000, 0.02);
-
-
-            Assert.Throws<Exception>(() => {
-
-                Account.Withdraw(double.NaN);
-            });
-        }
+     
         [Fact]
         public void ShouldThrowExceptionIfBrokeOnWithdraw()
         {
@@ -91,26 +61,19 @@ namespace TestForLab1
             });
 
         }
-        [Fact]
-        public void WithdrawShouldThrowExceptionIfPositiveInfinity()
+     
+        [Theory]
+        [InlineData(double.NegativeInfinity)]
+        [InlineData(double.PositiveInfinity)]
+        [InlineData(double.NaN)]
+        public void WithdrawShouldThrowExceptionIfNotValidAmount(double amount)
         {
             Account Account = new Account(100, 0.02);
 
 
             Assert.Throws<Exception>(() => {
 
-                Account.Withdraw(double.PositiveInfinity);
-            });
-        }
-        [Fact]
-        public void WithdrawShouldThrowExceptionIfNegativeInfinity()
-        {
-            Account Account = new Account(100, 0.02);
-
-
-            Assert.Throws<Exception>(() => {
-
-                Account.Withdraw(double.NegativeInfinity);
+                Account.Withdraw(amount);
             });
         }
         [Fact]
@@ -138,39 +101,19 @@ namespace TestForLab1
             double expectedBalance = 500;
             Assert.Equal(expectedBalance, actualBalance);
         }
-        [Fact]
-        public void ShouldThrowAnExceptionOnNaNWhenTransfer()
-        {
-            Account Account = new Account(1000, 0.02);
-            Account SavingAccount = new Account(250, 0.02);
-            
-
-            Assert.Throws<Exception>(() => {
-
-                Account.Transfer(SavingAccount,double.NaN);
-            });
-        }
-        [Fact]
-        public void ShouldThrowAnExceptionOnPositiveInfinityWhenTransfer()
+         
+        [Theory]
+        [InlineData(double.NegativeInfinity)]
+        [InlineData(double.PositiveInfinity)]
+        [InlineData(double.NaN)]
+        public void ShouldThrowAnExceptionOnNotValidNumberWhenTransfer(double amount)
         {
             Account Account = new Account(1000, 0.02);
             Account SavingAccount = new Account(250, 0.02);
 
             Assert.Throws<Exception>(() => {
 
-                Account.Transfer(SavingAccount, double.PositiveInfinity);
-            });
-
-        }
-        [Fact]
-        public void ShouldThrowAnExceptionOnNegativeInfinityWhenTransfer()
-        {
-            Account Account = new Account(1000, 0.02);
-            Account SavingAccount = new Account(250, 0.02);
-
-            Assert.Throws<Exception>(() => {
-
-                Account.Transfer(SavingAccount, double.NegativeInfinity);
+                Account.Transfer(SavingAccount, amount);
             });
 
         }
@@ -230,36 +173,31 @@ namespace TestForLab1
             Assert.Equal(expectedBalance, actualBalance);
 
         }
-        [Fact]
-        public void CalculateInterestShouldThrowAnExceptionIfBalanceIsNaN()
+        [Theory]
+        [InlineData(double.NegativeInfinity)]
+        [InlineData(double.PositiveInfinity)]
+        [InlineData(double.NaN)]
+        public void
+            CalculateInterestShouldThrowAnExceptionIfBalanceIsNotValid(double balance)
         {
-            Account Account = new Account(double.NaN, 0.02);
+            Account Account = new Account(balance, 0.02);
 
             Assert.Throws<Exception>(() => {
 
                 Account.CalculateInterest();
             });
         }
-        [Fact]
-        public void CalculateInterestShouldThrowAnExceptionIfInterestRateIsNan()
+        [Theory]
+        [InlineData(double.NaN)]
+        [InlineData(double.NegativeInfinity)]
+        [InlineData(double.PositiveInfinity)]
+        public void CalculateInterestShouldThrowAnExceptionIfInterestRateIsNotValid(double interestRate)
         {
 
-            Account Account = new Account(200, double.NaN);
+            Account Account = new Account(200, interestRate);
 
-            Assert.Throws<Exception>(() => {
-
-                Account.CalculateInterest();
-            });
-        }
-        [Fact]
-        public void CalculateSholdThrowExceptionIfInfinity()
-        {
-
-            //TODO testa att skicka in flera värden med theory, alltså testa positieinfinity i samma testfall.
-
-            Account Account = new Account(double.NegativeInfinity, 0.02);
-
-            Assert.Throws<Exception>(() => {
+            Assert.Throws<Exception>(() =>
+            {
 
                 Account.CalculateInterest();
             });
