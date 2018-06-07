@@ -8,6 +8,21 @@ namespace TestForLab1
     public class UnitTest1
     {
 
+        [Theory]
+        [InlineData(double.NaN)]
+        [InlineData(double.NegativeInfinity)]
+        [InlineData(double.PositiveInfinity)]
+        [InlineData(-1)]
+        public void AccountShouldThrowExceptionIfNotValidInterestRate(double interestRate)
+        {
+            Assert.Throws<Exception>(() => {
+
+                Account Account = new Account(100,interestRate);
+
+            });
+
+        }
+
         [Fact]
         public void ShouldIncrementBalanceOnDeposit()
         {
@@ -24,6 +39,7 @@ namespace TestForLab1
         [InlineData(double.NegativeInfinity)]
         [InlineData(double.PositiveInfinity)]
         [InlineData(double.NaN)]
+        [InlineData(-1)]
         public void ShouldThrowExceptionIfAmountNotValidOnDeposit(double amount)
         {
             Account Account = new Account(100, 0.02);
@@ -68,6 +84,7 @@ namespace TestForLab1
         [InlineData(double.NegativeInfinity)]
         [InlineData(double.PositiveInfinity)]
         [InlineData(double.NaN)]
+        [InlineData(-1)]
         public void WithdrawShouldThrowExceptionIfNotValidAmount(double amount)
         {
             Account Account = new Account(100, 0.02);
@@ -104,11 +121,23 @@ namespace TestForLab1
             double expectedBalance = 500;
             Assert.Equal(expectedBalance, actualBalance);
         }
+    
+        [Fact]
+        public void TransferShouldThrowExceptionIfTargetIsNull()
+        {
+            Account Account = new Account(1000, 0.02);
+            Assert.Throws<Exception>(() =>
+            {
+
+                Account.Transfer(null, 50);
+            });
+        }
 
         [Theory]
         [InlineData(double.NegativeInfinity)]
         [InlineData(double.PositiveInfinity)]
         [InlineData(double.NaN)]
+        [InlineData(-1)]
         public void ShouldThrowAnExceptionOnNotValidNumberWhenTransfer(double amount)
         {
             Account Account = new Account(1000, 0.02);
@@ -183,6 +212,7 @@ namespace TestForLab1
         [InlineData(double.NegativeInfinity)]
         [InlineData(double.PositiveInfinity)]
         [InlineData(double.NaN)]
+        [InlineData(-1)]
         public void
             CalculateInterestShouldThrowAnExceptionIfBalanceIsNotValid(double balance)
         {
@@ -194,21 +224,5 @@ namespace TestForLab1
                 Account.CalculateInterest();
             });
         }
-        [Theory]
-        [InlineData(double.NaN)]
-        [InlineData(double.NegativeInfinity)]
-        [InlineData(double.PositiveInfinity)]
-        public void CalculateInterestShouldThrowAnExceptionIfInterestRateIsNotValid(double interestRate)
-        {
-
-            Account Account = new Account(200, interestRate);
-
-            Assert.Throws<Exception>(() =>
-            {
-
-                Account.CalculateInterest();
-            });
-        }
-
     }
 }
